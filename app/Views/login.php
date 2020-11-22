@@ -70,7 +70,7 @@
                 </div>
             <?php } ?>
             <?=form_open('login_user', ['id' => 'login_user']);?>
-            <form>
+
 
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
