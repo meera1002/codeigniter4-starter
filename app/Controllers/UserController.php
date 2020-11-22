@@ -88,7 +88,7 @@ class UserController extends BaseController
             $user_id = $this->createUser( $this->request->getVar() );
             if ( $user_id )
             {
-                //$this->fetchSubscription( $this->request->getVar(), $user_id );
+                $this->fetchSubscription( $this->request->getVar(), $user_id );
                 $status = $this->sendEmail( $this->request->getVar() );
             }
 
@@ -118,7 +118,7 @@ class UserController extends BaseController
     function fetchSubscription( $request, $user_id )
     {
         $client     = \Config\Services::curlrequest();
-        $response   = $client->request( 'GET', 'http://hn.algolia.com/api/v1/search?tags=' . $request[ 'subscription' ] );
+        $response   = $client->request( 'GET', 'https://hn.algolia.com/api/v1/search?tags=' . $request[ 'subscription' ] );
         $statusCode = $response->getStatusCode();
         $body       = $response->getBody();
         $body       = json_decode( $body, true );
