@@ -18,3 +18,4 @@ Please follow these instructions to set up your development environment:
 - Run "php spark serve" in your cloned repo
 - This will open a development server http://localhost:8080/ and open this url in your browser
 - Admin login email & password => test@example.com | 123456789
+- Upon the successful registration of the user, I am writing email content to the log file. You can find email HTML data from there [writable/logs]. The email will contain the verification email link. 
