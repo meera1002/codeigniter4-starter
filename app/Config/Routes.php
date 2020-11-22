@@ -35,12 +35,18 @@ $routes->get('login', 'UserController::login');
 $routes->get('users', 'HomeController::users');
 $routes->get('subscriptions/(:any)', 'HomeController::subscriptions/$1');
 $routes->get('subscription-delete/(:any)/(:any)', 'HomeController::deleteSubscription/$1/$2');
+$routes->get('edit-subscription/(:any)', 'HomeController::editSubscription/$1');
+$routes->post('post_subscription/(:any)', 'HomeController::postSubscription/$1');
+$routes->get('view-subscription/(:any)', 'HomeController::viewSubscription/$1');
+
 
 $routes->get('dashboard', 'HomeController::dashboard');
 $routes->get('register', 'UserController::registration');
 $routes->post('create_user', 'UserController::storeUser');
 $routes->post('login_user', 'UserController::loginUser');
 $routes->get('logout', 'UserController::logout');
+$routes->get('verify-email/(:any)', 'UserController::verifyEmail/$1');
+
 
 /**
  * --------------------------------------------------------------------

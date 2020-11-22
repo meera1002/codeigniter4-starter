@@ -26,7 +26,7 @@ class BaseController extends Controller
 	 *
 	 * @var array
 	 */
-	protected $helpers = ['form','url','form_validation'];
+	protected $helpers = ['form','url','form_validation','reCaptcha'];
 
 	/**
 	 * Constructor.
@@ -43,10 +43,6 @@ class BaseController extends Controller
 		$this->session = \Config\Services::session();
         $this->db = \Config\Database::connect();
 	}
-    public function is_logged_in()
-    {
-        $user = $this->session->get('user');
-        return isset($user);
-    }
+
 
 }

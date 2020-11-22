@@ -131,7 +131,7 @@
             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                 <tr>
                     <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                        <p style="margin: 0;">We're excited to have you get started. First, you need to confirm your account. Please see the details below</p>
+                        <p style="margin: 0;">We're excited to have you get started. First, you need to confirm your account. Please click the link below</p>
                     </td>
                 </tr>
 
@@ -147,7 +147,7 @@
                 </tr> <!-- COPY -->
                 <tr>
                     <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                        <p style="margin: 0;"><a href="#" target="_blank" style="color: #FFA73B;">http://localhost:8080</a></p>
+                        <p style="margin: 0;"><a href="#" target="_blank" style="color: #FFA73B;"><?= base_url('verify-email/'.$email) ?></a></p>
                     </td>
                 </tr>
 

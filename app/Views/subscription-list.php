@@ -7,9 +7,7 @@
 
                     <div class="card-body">
 
-                        <div class="alert alert-success" role="alert">
 
-                        </div>
 
                         <table class="table table-bordered">
                             <thead>
@@ -32,14 +30,17 @@
                                         <td><?=($row['comment_text'])?substr($row['comment_text'],0,50):substr($row['story_text'],0,50);?>...</td>
                                         <td><?=$row['points'];?></td>
                                         <td><?=$row['num_comments'];?></td>
+                                        <?php if($user['role_id'] ==1 ){?>
                                         <td>
-                                            <a href="<?= base_url('subscriptions/'.$row['id']) ?>" class="btn btn-primary">Edit</a>
+                                            <a href="<?= base_url('edit-subscription/'.$row['id']) ?>" class="btn btn-primary">Edit</a>
                                         </td>
                                         <td>
-                                            <a href="<?= base_url('subscription-delete/'.$row['id'].'/'.$user_id) ?>" class="btn btn-danger" >Delete</a>
+                                            <a class="btn btn-danger" onclick="deleteS(<?php echo $row['id']?>,<?php echo $user_id?>);">Delete</a>
 
                                         </td>
-
+                                        <?php }else{?>
+                                        <td><a href="<?= base_url('view-subscription/'.$row['id']) ?>" class="btn btn-primary">View</a></td>
+                                    <?php }?>
                                     </tr>
 
                                 <?php }}else{?>
@@ -49,7 +50,7 @@
                             <?php }?>
                             </tbody>
                         </table>
-
+                        <?= $pager->links() ?>
 
                     </div>
                 </div>
@@ -58,3 +59,10 @@
     </div>
 </main>
 
+<script>
+    function deleteS(a,b){
+        if(confirm('Are you sure you want to delete this?')){
+            window.location.href = "/subscription-delete/"+a+"/"+b;
+        }
+    }
+</script>

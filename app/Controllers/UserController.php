@@ -7,11 +7,13 @@ class UserController extends BaseController
 {
     public function registration( )
     {
-        return view( 'register' );
+        echo view( 'register' );
+
     }
     public function login( )
     {
-        return view( 'login' );
+        echo view( 'login' );
+
     }
     public function loginUser( )
     {
@@ -29,7 +31,7 @@ class UserController extends BaseController
         else
         {
             $model = new UserModel();
-            $user  = $model->where( 'email', $this->request->getVar( 'email' ) )->first();
+            $user  = $model->where( 'email', $this->request->getVar( 'email' ) )->where( 'verified', '1' )->first();
             if ( !$user )
             {
                 $data[ 'notExtsts' ] = 1;
@@ -61,6 +63,7 @@ class UserController extends BaseController
     public function storeUser( )
     {
         helper(['form']);
+        $session = session();
         $input = $this->validate( array(
             'first_name' => 'required|alpha_numeric_space|min_length[3]',
             'last_name' => 'required|alpha_numeric_space|min_length[3]',
@@ -69,10 +72,12 @@ class UserController extends BaseController
             'phone' => 'required|min_length[10]',
             'dob' => 'required',
             'country' => 'required',
-            'subscription' => 'required'
+            'subscription' => 'required',
+            'reCaptcha2' => 'required|reCaptcha2[]',
         ) );
         if ( !$input )
         {
+            $session->setFlashdata( 'message', '' );
             echo view( 'register', array(
                 'validation' => $this->validator,
                 'old' => $this->request->getVar()
@@ -86,9 +91,9 @@ class UserController extends BaseController
                 $this->fetchSubscription( $this->request->getVar(), $user_id );
                 $status = $this->sendEmail( $this->request->getVar() );
             }
-            //$this->session->setFlashdata('viewMessge','User created successfully!');
-            //$page['session'] =$this->session;
-            return redirect( '/register' );
+
+            $session->setFlashdata( 'message', 'User created successfully! Check email for verify your email' );
+            return redirect()->to( '/register' );
         }
     }
     function createUser( $request )
@@ -104,6 +109,7 @@ class UserController extends BaseController
             'country' => $request[ 'country' ],
             'subscription' => $request[ 'subscription' ],
             'role_id' => 2,
+            'verified' => '0',
             'created_at' => date( "Y-m-d h:i:sa" )
         );
         $userModel->insert( $data );
@@ -112,7 +118,7 @@ class UserController extends BaseController
     function fetchSubscription( $request, $user_id )
     {
         $client     = \Config\Services::curlrequest();
-        $response   = $client->request( 'GET', 'https://hn.algolia.com/api/v1/search?tags=' . $request[ 'subscription' ] );
+        $response   = $client->request( 'GET', 'http://hn.algolia.com/api/v1/search?tags=' . $request[ 'subscription' ] );
         $statusCode = $response->getStatusCode();
         $body       = $response->getBody();
         $body       = json_decode( $body, true );
@@ -159,6 +165,7 @@ class UserController extends BaseController
         );
         $body = view( 'emails/verification.php', $data );
         $email->setMessage( $body );
+        log_message('info', $body);
         if ( $email->send() )
         {
             return true;
@@ -168,5 +175,22 @@ class UserController extends BaseController
             return false;
         }
     }
-    //--------------------------------------------------------------------
+    function verifyEmail( $email )
+    {
+        $model = new UserModel();
+        $user = $model->where('email', $email)->first();
+
+        if( $user && $user['verified'] == 0 ){
+            $data      = array(
+                'id' => $user['id'],
+                'verified' => '1',
+                'updated_at' => date( "Y-m-d h:i:sa" )
+            );
+            $model->save($data);
+            $page[ 'verified' ] = 1;
+        }else{
+            $page[ 'verified' ] = 0;
+        }
+        echo view( 'verify-email',$page );
+    }
 }

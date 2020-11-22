@@ -7,9 +7,7 @@
 
                         <div class="card-body">
 
-                            <div class="alert alert-success" role="alert">
 
-                            </div>
 
                             <table class="table table-bordered">
                                 <thead>
@@ -30,7 +28,7 @@
                                     <td><?=$row['first_name'].' '.$row['last_name'];?></td>
                                     <td><?=$row['email'];?></td>
                                     <td><?=$row['phone'];?></td>
-                                    <td><?=$row['dob'];?></td>
+                                    <td><?=date('d/m/Y',strtotime($row['dob']));?></td>
                                     <td><?=$row['country'];?></td>
                                     <td>
                                         <a href="<?= base_url('subscriptions/'.$row['id']) ?>" class="btn btn-primary">View Subscription</a>
@@ -46,7 +44,7 @@
                                 </tbody>
                             </table>
 
-
+                            <?= $pager->links() ?>
                         </div>
                     </div>
                 </div>

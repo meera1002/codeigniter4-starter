@@ -1,20 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html >
 <head>
-    <meta charset="UTF-8">
-    <title>Welcome to CodeIgniter 4!</title>
-    <meta name="description" content="The small framework with powerful features">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/png" href="/favicon.ico"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <title></title>
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
 </head>
 <body>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+<div id="app">
+    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <div class="container">
+            <?php if(isset($id)){?>
+                <a class="navbar-brand" href="<?= base_url('users') ?>">
+                    Dashboard
+                </a>
+            <?php }else{?>
+                <a class="navbar-brand">
+                    Please login/register to continue
+                </a>
+            <?php }?>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Left Side Of Navbar -->
+                <ul class="navbar-nav mr-auto">
 
+                </ul>
+
+                <!-- Right Side Of Navbar -->
+                <ul class="navbar-nav ml-auto">
+                    <!-- Authentication Links -->
+
+                    <?php if(isset($id)){?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url('logout') ?>">Logout</a>
+                        </li>
+                    <?php }?>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="py-4">
 
 <div class="container">
 
@@ -22,14 +60,22 @@
     <div class="card bg-light">
         <article class="card-body mx-auto" style="max-width: 400px;">
             <h4 class="card-title mt-3 text-center">Registration</h4>
+            <?php
+            $local_session = \Config\Services::session(); // Needed for Point 5
+
+            ?>
             <?php if(isset($validation) && $validation->listErrors()) { ?>
             <div class="alert alert-danger" role="alert">
                 <?= $validation->listErrors(); ?>
                 </div>
                 <?php } ?>
-
+            <?php if($local_session->getFlashdata('message')) { ?>
+            <div class="alert alert-success" role="alert">
+                <?=$local_session->getFlashdata('message');?>
+            </div>
+            <?php } ?>
             <?=form_open('create_user', ['id' => 'create_user']);?>
-            <form>
+
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-user"></i> </span>
@@ -333,7 +379,11 @@
                         <option value="poll">Poll</option>
                     </select>
                 </div> <!-- form-group end.// -->
+                <div class="form-group">
+                    <?php echo reCaptcha2('reCaptcha2', ['id' => 'recaptcha_v2'], ['theme' => 'white']);?>
+                </div> <!-- form-group end.// -->
                 <!-- form-group// -->
+
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block"> Create Account  </button>
                 </div> <!-- form-group// -->
@@ -342,6 +392,8 @@
         </article>
     </div> <!-- card.// -->
 
+</div>
+</main>
 </div>
 
 </body>

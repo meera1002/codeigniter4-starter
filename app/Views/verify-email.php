@@ -53,49 +53,29 @@
         </div>
     </nav>
     <main class="py-4">
-<div class="container">
+        <div class="container">
 
 
-    <div class="card bg-light">
-        <article class="card-body mx-auto">
-            <h4 class="card-title mt-3 text-center">Login</h4>
-            <?php if(isset($validation) && $validation->listErrors()) { ?>
-                <div class="alert alert-danger" role="alert">
-                    <?= $validation->listErrors(); ?>
-                </div>
-            <?php } ?>
-            <?php if(isset($notExtsts) && $notExtsts) { ?>
-                <div class="alert alert-danger" role="alert">
-                    User not exists or not verified
-                </div>
-            <?php } ?>
-            <?=form_open('login_user', ['id' => 'login_user']);?>
-            <form>
+            <div class="card bg-light">
+                <article class="card-body mx-auto">
+                    <h4 class="card-title mt-3 text-center">Verify email</h4>
+                    <?php if(isset($verified) && $verified == 1) { ?>
+                        <div class="alert alert-info" role="alert">
+                            You are successfully verified
+                        </div>
+                    <?php } ?>
+                    <?php if(isset($verified) && $verified == 0) { ?>
+                        <div class="alert alert-info" role="alert">
+                            You are already verified/record not exists
+                        </div>
+                    <?php } ?>
+                        <p class="text-center"> <a href="<?= base_url('login') ?>">Click here to login</a> </p>
 
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
-                    </div>
-                    <input name="email" class="form-control" placeholder="Email address" type="email" value="<?=isset($old['email'])?$old['email']:''?>">
-                </div> <!-- form-group// -->
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-                    </div>
-                    <input class="form-control" placeholder="Create password" type="password" name="password">
-                </div> <!-- form-group// -->
+                </article>
+            </div> <!-- card.// -->
 
-                <!-- form-group// -->
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block"> Login  </button>
-                </div> <!-- form-group// -->
-                <p class="text-center">New user? <a href="<?= base_url('register') ?>">Register</a> </p>
-                <?=form_close();?>
-        </article>
-    </div> <!-- card.// -->
-
-</div>
-</main>
+        </div>
+    </main>
 </div>
 
 </body>

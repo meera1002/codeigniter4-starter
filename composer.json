@@ -6,7 +6,8 @@
 	"license": "MIT",
 	"require": {
 		"php": ">=7.2",
-		"codeigniter4/framework": "^4"
+		"codeigniter4/framework": "^4",
+		"denis303/codeigniter4-recaptcha": "dev-master"
 	},
 	"require-dev": {
 		"fzaninotto/faker": "^1.9@dev",
