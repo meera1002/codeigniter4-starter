@@ -3,7 +3,7 @@
 ## Specifications
 
 - PHP 7.2 or greater
-- CodeIgniter
+- CodeIgniter 4
 - Bootstrap
 
 ## Developer Notes
