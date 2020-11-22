@@ -88,7 +88,7 @@ class UserController extends BaseController
             $user_id = $this->createUser( $this->request->getVar() );
             if ( $user_id )
             {
-                $this->fetchSubscription( $this->request->getVar(), $user_id );
+                //$this->fetchSubscription( $this->request->getVar(), $user_id );
                 $status = $this->sendEmail( $this->request->getVar() );
             }
 
