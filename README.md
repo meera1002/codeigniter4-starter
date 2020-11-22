@@ -11,8 +11,8 @@
 Please follow these instructions to set up your development environment:
 
 - Rename env to .env
-- composer update
+- Run "composer update"
 - Create a database name called web_db
 - Set db user name & password in .env ( database.default.username & database.default.password )
-- php spark serve in your project repo
+- Run "php spark serve" in your project repo
 - This will open a development server http://localhost:8080/ and open this url in your browser
